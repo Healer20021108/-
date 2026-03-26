@@ -157,20 +157,19 @@ body {
 }
 .diag-loading.hidden { display:none }
 
-/* PNG 圖卡 — 長按可存 */
+/* SVG 圖卡容器 */
 .diag-img {
-  display:block;width:100%;border-radius:16px;
+  display:block;width:100%;border-radius:16px;overflow:hidden;
   box-shadow:0 8px 32px rgba(0,0,0,.14);
-  -webkit-touch-callout:default; /* iOS long-press menu */
   opacity:0;transition:opacity .4s ease;
-  /* aspect-ratio placeholder until img loads */
-  aspect-ratio:4/5;background:var(--s1);
+  background:var(--s1);min-height:200px;
 }
+.diag-img svg { width:100%;height:auto;display:block; }
 .diag-img.loaded { opacity:1 }
 
 .share-hint { font-size:12px;color:var(--muted);margin-bottom:12px;text-align:center }
 .share-actions { display:grid;grid-template-columns:1fr 1fr;gap:10px }
-.btn-share { display:flex;align-items:center;justify-content:center;gap:6px;padding:13px 14px;border-radius:12px;font-family:var(--sans);font-size:13px;font-weight:500;cursor:pointer;transition:all .35s var(--ease);border:none }
+.btn-share { display:flex;align-items:center;justify-content:center;gap:6px;padding:13px 14px;border-radius:12px;font-family:var(--sans);font-size:17px;font-weight:500;cursor:pointer;transition:all .35s var(--ease);border:none }
 .btn-dl { background:var(--accent);color:#F5EDD9;box-shadow:0 4px 16px rgba(139,100,32,.22) }
 .btn-dl:hover { background:#6E4E18;transform:translateY(-1px) }
 .btn-cp { background:var(--s2);color:var(--text);border:1px solid var(--border) }
@@ -227,7 +226,7 @@ body {
 
 /* ── 書卡 ── */
 .book-section { margin-bottom:22px }
-.sec-lbl { font-family:var(--mono);font-size:19px;letter-spacing:.25em;color:var(--accent);margin-bottom:14px;opacity:.85 }
+.sec-lbl { font-family:var(--mono);font-size:15px;letter-spacing:.25em;color:var(--accent);margin-bottom:14px;opacity:.85 }
 .book-card { background:var(--s1);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;transition:all .35s var(--ease) }
 .book-card:hover { border-color:rgba(139,100,32,.2) }
 .book-top-link { cursor:pointer;padding:22px 20px 14px;transition:background .3s var(--ease) }
@@ -354,10 +353,10 @@ body {
     <div class="diag-section">
       <div class="diag-card-wrap">
         <div class="diag-loading" id="diag-loading">生成中...</div>
-        <!-- PNG — iOS 長按可儲存至相簿 -->
-        <img id="diag-img" class="diag-img" src="" alt="心理人格鑑定書">
+        <!-- SVG 內嵌顯示，文字清晰可縮放 -->
+        <div id="diag-img" class="diag-img"></div>
       </div>
-      <div class="share-hint">長按圖卡即可儲存至相簿</div>
+      <div class="share-hint">截圖儲存，或點「儲存圖卡」下載 SVG 檔</div>
       <div class="share-actions">
         <button class="btn-share btn-dl" onclick="downloadCard()">
           <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M6.5 1.5v7M3.5 6l3 4 3-4M1.5 11h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -573,10 +572,10 @@ function buildReportSVG(type, pct, typeName, typeEn, severity, aL1, aL2, advice)
   <rect x="50" y="50" width="980" height="230" rx="6"
     fill="${ac}" fill-opacity="0.07"/>
   <text x="540" y="148"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-size="64" fill="${ac}" text-anchor="middle" letter-spacing="8">心理人格鑑定書</text>
   <text x="540" y="218"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-size="22" fill="${ac}" text-anchor="middle" letter-spacing="10" opacity="0.55">MENTAL PROFILE REPORT</text>
 
   <!-- ── 粗分隔 ── -->
@@ -584,27 +583,27 @@ function buildReportSVG(type, pct, typeName, typeEn, severity, aL1, aL2, advice)
 
   <!-- ── Row 1：人格類型（標籤上、數值下） ── -->
   <text x="90" y="${r1Y}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">人格類型</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">人格類型</text>
   <text x="90" y="${tnY}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-weight="700" font-size="72" fill="${ac}">${typeName}</text>
   <text x="90" y="${teY}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="20" fill="${ac}" opacity="0.4" letter-spacing="4">${typeEn}</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="20" fill="${ac}" opacity="0.4" letter-spacing="4">${typeEn}</text>
   <line x1="70" y1="${sep1}" x2="1010" y2="${sep1}" stroke="${ac}" stroke-width="1" stroke-opacity="0.1" stroke-dasharray="6 5"/>
 
   <!-- ── Row 2：內耗指數 ── -->
   <text x="90" y="${r2Y}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">內耗指數</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">內耗指數</text>
   <text x="90" y="${pctY}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-weight="700" font-size="120" fill="${ac}">${pct}<tspan font-size="36" font-weight="400" opacity="0.5"> %</tspan></text>
   <line x1="70" y1="${sep2}" x2="1010" y2="${sep2}" stroke="${ac}" stroke-width="1" stroke-opacity="0.1" stroke-dasharray="6 5"/>
 
   <!-- ── Row 3：嚴重程度 ── -->
   <text x="90" y="${r3Y}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">嚴重程度</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="24" fill="${ac}" opacity="0.5" letter-spacing="2">嚴重程度</text>
   <text x="90" y="${sevY}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-weight="700" font-size="66" fill="${ac}">${severity}型內耗</text>
 
   <!-- ── 粗分隔 ── -->
@@ -612,12 +611,12 @@ function buildReportSVG(type, pct, typeName, typeEn, severity, aL1, aL2, advice)
 
   <!-- ── 核心特徵 ── -->
   <text x="90" y="${secY+8}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="22" fill="${ac}" opacity="0.45" letter-spacing="4">核心特徵</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="22" fill="${ac}" opacity="0.45" letter-spacing="4">核心特徵</text>
   <text x="90" y="${secY+78}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-size="46" fill="rgba(0,0,0,0.75)">${aL1}</text>
   <text x="90" y="${secY+140}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-size="46" fill="rgba(0,0,0,0.75)">${aL2}</text>
 
   ${hasAdv ? `
@@ -625,9 +624,9 @@ function buildReportSVG(type, pct, typeName, typeEn, severity, aL1, aL2, advice)
   <line x1="50" y1="${advY-30}" x2="1030" y2="${advY-30}" stroke="${ac}" stroke-width="1.5" stroke-opacity="0.2"/>
   <!-- ── 建議 ── -->
   <text x="90" y="${advY+16}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="22" fill="${ac}" opacity="0.45" letter-spacing="4">建議方向</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="22" fill="${ac}" opacity="0.45" letter-spacing="4">建議方向</text>
   <text x="90" y="${advY+80}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif"
+    font-family="'Noto Serif TC','PingFang TC',serif"
     font-size="40" fill="${ac}">${advice}</text>
   ` : ''}
 
@@ -636,16 +635,16 @@ function buildReportSVG(type, pct, typeName, typeEn, severity, aL1, aL2, advice)
 
   <!-- ── 底部：年份 + 品牌 ── -->
   <text x="110" y="${footY+4}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="22" fill="${ac}" opacity="0.35" letter-spacing="5">2026 · 你的內耗人格測驗</text>
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="22" fill="${ac}" opacity="0.35" letter-spacing="5">2026 · 你的內耗人格測驗</text>
 
   <!-- ── 印章 ── -->
-  <circle cx="900" cy="${footY-18}" r="56" stroke="${ac}" stroke-width="2" stroke-opacity="0.2" fill="none"/>
-  <circle cx="900" cy="${footY-18}" r="44" stroke="${ac}" stroke-width="1" stroke-opacity="0.14" fill="none"/>
-  <text x="900" y="${footY-26}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="16" fill="${ac}"
+  <circle cx="900" cy="${footY-72}" r="76" stroke="${ac}" stroke-width="2" stroke-opacity="0.2" fill="none"/>
+  <circle cx="900" cy="${footY-72}" r="62" stroke="${ac}" stroke-width="1" stroke-opacity="0.14" fill="none"/>
+  <text x="900" y="${footY-84}"
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="20" fill="${ac}"
     text-anchor="middle" letter-spacing="3" opacity="0.45">${typeEn}</text>
-  <text x="900" y="${footY+2}"
-    font-family="'PingFang TC','Heiti TC','Microsoft JhengHei',serif" font-size="12" fill="${ac}"
+  <text x="900" y="${footY-58}"
+    font-family="'Noto Serif TC','PingFang TC',serif" font-size="16" fill="${ac}"
     text-anchor="middle" opacity="0.3" letter-spacing="2">CERTIFIED</text>
 </svg>`;
 }
@@ -761,30 +760,21 @@ async function fillResult(pct){
   document.getElementById('book-top-link').onclick=()=>window.open(book.bookUrl,'_blank','noopener,noreferrer');
   document.getElementById('book-shop-btn').onclick=()=>window.open(book.shopUrl,'_blank','noopener,noreferrer');
 
-  /* 診斷書 PNG 生成（非同步，不阻塞畫面切換） */
+  /* 診斷書 SVG 直接注入（文字清晰、可縮放） */
   const loadingEl=document.getElementById('diag-loading');
   const imgEl=document.getElementById('diag-img');
   loadingEl.classList.remove('hidden');
   imgEl.classList.remove('loaded');
 
-  try {
-    const svg=buildReportSVG(
-      lv.type,pct,lv.typeName,lv.typeEn,lv.severity,
-      lv.cardAnalysis[0]||'',lv.cardAnalysis[1]||'',
-      lv.cardAdvice
-    );
-    cardPNG = await svgToPng(svg);
-    imgEl.src=cardPNG;
-    imgEl.onload=()=>{ loadingEl.classList.add('hidden');imgEl.classList.add('loaded'); };
-  } catch(err) {
-    console.warn('PNG 生成失敗，改用 SVG 顯示',err);
-    /* fallback：直接顯示 SVG */
-    const svg=buildReportSVG(lv.type,pct,lv.typeName,lv.typeEn,lv.severity,lv.cardAnalysis[0]||'',lv.cardAnalysis[1]||'',lv.cardAdvice);
-    const dataUri='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
-    cardPNG=dataUri;
-    imgEl.src=dataUri;
-    imgEl.onload=()=>{ loadingEl.classList.add('hidden');imgEl.classList.add('loaded'); };
-  }
+  const svg=buildReportSVG(
+    lv.type,pct,lv.typeName,lv.typeEn,lv.severity,
+    lv.cardAnalysis[0]||'',lv.cardAnalysis[1]||'',
+    lv.cardAdvice
+  );
+  cardPNG='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+  imgEl.innerHTML=svg;
+  loadingEl.classList.add('hidden');
+  imgEl.classList.add('loaded');
 }
 
 function animGauge(target){
@@ -796,18 +786,10 @@ function animGauge(target){
 
 function downloadCard(){
   if(!cardPNG) return;
-  const isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
-  if(isIOS){
-    /* iOS：開新頁顯示 PNG，長按儲存 */
-    const w=window.open('','_blank');
-    w.document.write(`<html><head><meta name="viewport" content="width=device-width,initial-scale=1"><style>body{margin:0;background:#F5EDD9;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh}img{max-width:95%;border-radius:10px}p{color:#8B6420;font-family:sans-serif;font-size:13px;margin-top:14px;opacity:.75;letter-spacing:.05em}</style></head><body><img src="${cardPNG}" alt="鑑定書"><p>長按圖片 → 儲存至相簿</p></body></html>`);
-    w.document.close();
-  } else {
-    const a=document.createElement('a');
-    a.href=cardPNG;
-    a.download=`naohao-${cardType}-report.png`;
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-  }
+  const a=document.createElement('a');
+  a.href=cardPNG;
+  a.download=`naohao-${cardType}-report.svg`;
+  document.body.appendChild(a);a.click();document.body.removeChild(a);
 }
 
 function copyLink(){
